@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Picture Puzzle</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <h1>Picture Puzzle</h1>
+
+  <!-- *** START MAIN CONTAINER *** -->
+  <div class="main-container">
+    <!-- *** START PUZZLE CONTROLS *** -->
+    <div class="puzzle-controls">
+      <button id="newBtn">New Puzzle</button>
+      <button id="resetBtn">Reset Puzzle</button>
+    </div>
+    <!-- *** END PUZZLE CONTROLS *** -->
+
+    <!-- *** START PUZZLE CONTAINER *** -->
+    <div class="puzzle-container">
+      <!-- *** START PICTURE TILE GRID *** -->
+      <div id="puzzle" class="tile-grid">
+        <!-- *** START PICTURE TILE GRID ROW #1 *** -->
+        <div data-cell-number="1">
+          <div class="tile tile-r1-c1" data-tile-number="1">
+            <span class="tile-hint">1</span>
+          </div>
+        </div>
+        <div data-cell-number="2">
+          <div class="tile tile-r1-c2" data-tile-number="2">
+            <span class="tile-hint">2</span>
+          </div>
+        </div>
+        <div data-cell-number="3">
+          <div class="tile tile-r1-c3" data-tile-number="3">
+            <span class="tile-hint">3</span>
+          </div>
+        </div>
+        <div data-cell-number="4">
+          <div class="tile tile-r1-c4" data-tile-number="4">
+            <span class="tile-hint">4</span>
+          </div>
+        </div>
+        <!-- *** END PICTURE TILE GRID ROW #1 *** -->
+        <!-- *** START PICTURE TILE GRID ROW #2 *** -->
+        <div data-cell-number="5">
+          <div class="tile tile-r2-c1" data-tile-number="5">
+            <span class="tile-hint">5</span>
+          </div>
+        </div>
+        <div data-cell-number="6">
+          <div class="tile tile-r2-c2" data-tile-number="6">
+            <span class="tile-hint">6</span>
+          </div>
+        </div>
+        <div data-cell-number="7">
+          <div class="tile tile-r2-c3" data-tile-number="7">
+            <span class="tile-hint">7</span>
+          </div>
+        </div>
+        <div data-cell-number="8">
+          <div class="tile tile-r2-c4" data-tile-number="8">
+            <span class="tile-hint">8</span>
+          </div>
+        </div>
+        <!-- *** END PICTURE TILE GRID ROW #2 *** -->
+        <!-- *** START PICTURE TILE GRID ROW #3 *** -->
+        <div data-cell-number="9">
+          <div class="tile tile-r3-c1" data-tile-number="9">
+            <span class="tile-hint">9</span>
+          </div>
+        </div>
+        <div data-cell-number="10">
+          <div class="tile tile-r3-c2" data-tile-number="10">
+            <span class="tile-hint">10</span>
+          </div>
+        </div>
+        <div data-cell-number="11">
+          <div class="tile tile-r3-c3" data-tile-number="11">
+            <span class="tile-hint">11</span>
+          </div>
+        </div>
+        <div data-cell-number="12">
+          <div class="tile tile-r3-c4" data-tile-number="12">
+            <span class="tile-hint">12</span>
+          </div>
+        </div>
+        <!-- *** END PICTURE TILE GRID ROW #3 *** -->
+        <!-- *** START PICTURE TILE GRID ROW #4 *** -->
+        <div data-cell-number="13">
+          <div class="tile tile-r4-c1" data-tile-number="13">
+            <span class="tile-hint">13</span>
+          </div>
+        </div>
+        <div data-cell-number="14">
+          <div class="tile tile-r4-c2" data-tile-number="14">
+            <span class="tile-hint">14</span>
+          </div>
+        </div>
+        <div data-cell-number="15">
+          <div class="tile tile-r4-c3" data-tile-number="15">
+            <span class="tile-hint">15</span>
+          </div>
+        </div>
+        <div data-cell-number="16">
+          <div class="tile tile-open" data-tile-number="16">
+            <span class="tile-hint">16</span>
+          </div>
+        </div>
+        <!-- *** END PICTURE TILE GRID ROW #4 *** -->
+      </div>
+      <!-- *** END PICTURE TILE GRID *** -->
+    </div>
+    <!-- *** END PUZZLE CONTAINER *** -->
+  </div>
+  <!-- *** END MAIN CONTAINER *** -->
+
+  <script src="main.js"></script>
+</body>
+
+</html>

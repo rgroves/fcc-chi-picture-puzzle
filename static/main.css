@@ -1,0 +1,277 @@
+/*******************************************************************************
+** Custom Properties for the sizing and responsiveness of the puzzle.
+*******************************************************************************/
+:root {
+  --tile-size: 300px;
+  --grid-column-count: 4;
+  --grid-row-count: 4;
+}
+
+@media (min-height: 550px) and (min-width: 550px) {
+  :root {
+    --tile-size: 500px;
+  }
+}
+
+@media (min-height: 750px) and (min-width: 750px) {
+  :root {
+    --tile-size: 700px;
+  }
+}
+
+@media (min-height: 950px) and (min-width: 950px) {
+  :root {
+    --tile-size: 900px;
+  }
+}
+
+/*******************************************************************************
+** Styling of the main page.
+*******************************************************************************/
+html,
+body {
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-width: 310px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+}
+
+/*******************************************************************************
+** Styling of main container.
+*******************************************************************************/
+.main-container {
+  width: 95%;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-areas:
+    "puzzle"
+    "puzzle-controls";
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (min-width: 820px) {
+  .main-container {
+    width: 65%;
+    grid-template-areas: "puzzle-controls puzzle";
+    grid-template-columns: 25% 1fr;
+  }
+}
+
+/*******************************************************************************
+** Styling of puzzle's container.
+*******************************************************************************/
+.puzzle-container {
+  grid-area: puzzle;
+}
+
+/*******************************************************************************
+** Styling of puzzle's controls.
+*******************************************************************************/
+.puzzle-controls {
+  box-sizing: border-box;
+  margin: 0.5em;
+  padding: 0.5em;
+
+  grid-area: puzzle-controls;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.puzzle-controls > button {
+  flex: 0 0 120px;
+  line-height: 1.5em;
+  margin: 5px;
+  padding: 1em;
+}
+
+/*******************************************************************************
+** Styling of the puzzle's tile grid.
+*******************************************************************************/
+.tile-grid {
+  box-sizing: border-box;
+  width: var(--tile-size);
+  height: var(--tile-size);
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: repeat(
+    var(--grid-column-count),
+    calc(var(--tile-size) / var(--grid-column-count))
+  );
+
+  border: 1px black solid;
+  flex: 0 1 1fr;
+}
+
+/*******************************************************************************
+** Styling of a puzzle tile.
+*******************************************************************************/
+.tile {
+  box-sizing: border-box;
+  width: calc(var(--tile-size) / var(--grid-column-count));
+  height: calc(var(--tile-size) / var(--grid-row-count));
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-origin: border-box;
+  background-repeat: no-repeat;
+  background-image: url(https://source.unsplash.com/K4mSJ7kc0As/300x300);
+  border: 1px black solid;
+  font-weight: bold;
+  font-size: 1em;
+  transform: scale(1);
+  transition: transform 0.25s, width 0.25s, height 0.25s;
+}
+
+@media (min-height: 550px) and (min-width: 550px) {
+  .tile {
+    background-image: url(https://source.unsplash.com/K4mSJ7kc0As/500x500);
+  }
+}
+
+@media (min-height: 750px) and (min-width: 750px) {
+  .tile {
+    background-image: url(https://source.unsplash.com/K4mSJ7kc0As/700x700);
+  }
+}
+@media (min-height: 950px) and (min-width: 950px) {
+  .tile {
+    background-image: url(https://source.unsplash.com/K4mSJ7kc0As/900x900);
+  }
+}
+
+/*******************************************************************************
+** Styling of the puzzle's first grid row.
+*******************************************************************************/
+.tile-r1-c1 {
+  background-position: top 0 left 0;
+}
+.tile-r1-c2 {
+  background-position: top 0 left
+    calc(var(--tile-size) / var(--grid-column-count) * -1);
+}
+.tile-r1-c3 {
+  background-position: top 0 left
+    calc(var(--tile-size) / var(--grid-column-count) * -2);
+}
+.tile-r1-c4 {
+  background-position: top 0 left
+    calc(var(--tile-size) / var(--grid-column-count) * -3);
+}
+
+/*******************************************************************************
+** Styling of the puzzle's second grid row.
+*******************************************************************************/
+.tile-r2-c1 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -1) left 0;
+}
+.tile-r2-c2 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -1) left
+    calc(var(--tile-size) / var(--grid-row-count) * -1);
+}
+.tile-r2-c3 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -1) left
+    calc(var(--tile-size) / var(--grid-row-count) * -2);
+}
+.tile-r2-c4 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -1) left
+    calc(var(--tile-size) / var(--grid-row-count) * -3);
+}
+
+/*******************************************************************************
+** Styling of the puzzle's third grid row.
+*******************************************************************************/
+.tile-r3-c1 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -2) left 0;
+}
+.tile-r3-c2 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -2) left
+    calc(var(--tile-size) / var(--grid-row-count) * -1);
+}
+.tile-r3-c3 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -2) left
+    calc(var(--tile-size) / var(--grid-row-count) * -2);
+}
+.tile-r3-c4 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -2) left
+    calc(var(--tile-size) / var(--grid-row-count) * -3);
+}
+
+/*******************************************************************************
+** Styling of the puzzle's fourth grid row.
+*******************************************************************************/
+.tile-r4-c1 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -3) left 0;
+}
+.tile-r4-c2 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -3) left
+    calc(var(--tile-size) / var(--grid-row-count) * -1);
+}
+.tile-r4-c3 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -3) left
+    calc(var(--tile-size) / var(--grid-row-count) * -2);
+}
+.tile-r4-c4 {
+  background-position: top
+    calc(var(--tile-size) / var(--grid-column-count) * -3) left
+    calc(var(--tile-size) / var(--grid-row-count) * -3);
+}
+
+/*******************************************************************************
+** Styling of the open tile in the puzzle cell grid.
+*******************************************************************************/
+.tile-open {
+  background-image: none;
+  background: white;
+}
+
+/*******************************************************************************
+** Styling of the number hint on a puzzle tile.
+*******************************************************************************/
+span.tile-hint {
+  box-sizing: border-box;
+  min-width: 1.5em;
+  line-height: 1.5em;
+  padding: 0;
+  margin: 0;
+
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+}
+
+/*******************************************************************************
+** Styling of the fade out effect when a tile is clicked.
+*******************************************************************************/
+.fade-out {
+  transform: scale(0);
+  transition: transform 0.25s;
+}
