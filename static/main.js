@@ -54,6 +54,58 @@ function moveTileIntoCellAtPosition(tile, cellNumber) {
 }
 
 //==============================================================================
+// This function determines which cell numbers are to be considered valid moves
+// based upon the current location (cell number) of where the open tile resides.
+//==============================================================================
+function getValidMoves(openTileCellNumber) {
+  // The candidates array will hold the cell numbers that are considered to be
+  // valid possible moves a player can make—meaning only tiles that reside in a
+  // cell whose cell number ends up in this array should be considered
+  // "slideable tiles" that a player can click on to make a move.
+  let candidates = [];
+
+  // As long as the current location of the open tile is not a cell in the top
+  // row, consider the cell above to be valid. Note that cell numbers in the top
+  // row will range from 1 to the value stored in gridColumns.
+  if (openTileCellNumber > gridColumns) {
+    // Add the cell number located above the current open tile cell to the
+    // valid moves candidate list.
+    candidates.push(openTileCellNumber - gridColumns);
+  }
+
+  // As long as the current location of the open tile is not a cell in the
+  // bottom row, consider the cell below to be valid. Note that cell numbers in
+  // the bottom row will range from (tileCount - gridColumns + 1) to tileCount.
+  if (openTileCellNumber < tileCount - gridColumns + 1) {
+    // Add the cell number located below the current open tile cell to the
+    // valid moves candidate list.
+    candidates.push(openTileCellNumber + gridColumns);
+  }
+
+  // As long as the current location of the open tile is not a cell in the
+  // rightmost column, consider the cell to the right to be valid. Note that
+  // cell numbers in the right column will be evenly divisible by gridColumns.
+  if (openTileCellNumber % gridColumns !== 0) {
+    // Add the cell number located to the right of the current open tile cell to
+    // the valid moves candidate list.
+    candidates.push(openTileCellNumber + 1);
+  }
+
+  // As long as the current location of the open tile is not a cell in the
+  // leftmost column, consider the cell to the left to be valid. Note that
+  // cell numbers in the left column will have a remainder of 1 if divied by
+  // gridColumns.
+  if (openTileCellNumber % gridColumns !== 1) {
+    // Add the cell number located to the left of the current open tile cell to
+    // the valid moves candidate list.
+    candidates.push(openTileCellNumber - 1);
+  }
+
+  // Return the candidate list of cell numbers that are valid possible moves.
+  return candidates;
+}
+
+//==============================================================================
 // This function performs the movement of a tile when a player clicks on it.
 //==============================================================================
 function puzzleClickHandler(event) {
@@ -84,8 +136,15 @@ function puzzleClickHandler(event) {
   let openTileCellNumber = openTile.parentElement.dataset.cellNumber;
   openTileCellNumber = Number(openTileCellNumber);
 
-  moveTileIntoCellAtPosition(targetTile, openTileCellNumber);
-  moveTileIntoCellAtPosition(openTile, fromCellNumber);
+  // Generate the list of valid moves.
+  let validMoves = getValidMoves(openTileCellNumber);
+
+  // Move the tile only if the tile that was clicked was in a cell with a cell
+  // number in the list of valid moves.
+  if (validMoves.includes(fromCellNumber)) {
+    moveTileIntoCellAtPosition(targetTile, openTileCellNumber);
+    moveTileIntoCellAtPosition(openTile, fromCellNumber);
+  }
 }
 
 puzzle.addEventListener("click", puzzleClickHandler);
