@@ -25,3 +25,30 @@ gridRows = Number(gridRows);
 
 // Calculate the total number of tiles in the puzzle grid (rows times columns).
 let tileCount = gridRows * gridColumns;
+
+//==============================================================================
+// Helper function to get a specific tile by it's tile number.
+//==============================================================================
+function getTile(tileNumber) {
+  return allTiles[tileNumber - 1];
+}
+
+//==============================================================================
+// Helper function to get a specific cell by it's cell number.
+//==============================================================================
+function getCell(cellNumber) {
+  return allCells[cellNumber - 1];
+}
+
+//==============================================================================
+// Helper function to move tile into the cell referenced by cell number.
+//==============================================================================
+function moveTileIntoCellAtPosition(tile, cellNumber) {
+  let targetCell = getCell(cellNumber);
+
+  if (targetCell.firstElementChild) {
+    targetCell.replaceChild(tile, targetCell.firstElementChild);
+  } else {
+    targetCell.appendChild(tile);
+  }
+}
