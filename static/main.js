@@ -106,6 +106,28 @@ function getValidMoves(openTileCellNumber) {
 }
 
 //==============================================================================
+// This function will check if the puzzle pieces are in the correct order and
+// if so alert the player that they won.
+//==============================================================================
+function checkWinCondition() {
+  let tiles = Array.from(puzzle.querySelectorAll("div.tile"));
+
+  if (
+    // Use the index of the array element (adjusted to be 1-based) to determine
+    // if the tiles are in order.
+    tiles.every((tile, index) => {
+      return Number(tile.dataset.tileNumber) === index + 1;
+    })
+  ) {
+    // Remove the click handler from the puzzle.
+    puzzle.removeEventListener("click", puzzleClickHandler);
+
+    // Alert the player that they have won.
+    alert("win");
+  }
+}
+
+//==============================================================================
 // This function performs the movement of a tile when a player clicks on it.
 //==============================================================================
 function puzzleClickHandler(event) {
@@ -144,6 +166,10 @@ function puzzleClickHandler(event) {
   if (validMoves.includes(fromCellNumber)) {
     moveTileIntoCellAtPosition(targetTile, openTileCellNumber);
     moveTileIntoCellAtPosition(openTile, fromCellNumber);
+
+    // Use setTimeout to queue up a call to check for the win condition after
+    // the click handler logic has all been executed.
+    setTimeout(() => checkWinCondition(), 0);
   }
 }
 
