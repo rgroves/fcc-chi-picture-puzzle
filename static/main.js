@@ -147,4 +147,17 @@ function puzzleClickHandler(event) {
   }
 }
 
-puzzle.addEventListener("click", puzzleClickHandler);
+//==============================================================================
+// This function makes the puzzle playable by shuffling the tile order and
+// wiring up the click handler which allows the player to move tiles.
+//==============================================================================
+function initializePuzzle() {
+  // Setup click handler for tiles.
+  puzzle.addEventListener("click", puzzleClickHandler);
+}
+
+//==============================================================================
+// Call the function that gets the puzzle ready and makes the game playable.
+//==============================================================================
+// Initialize the puzzle.
+initializePuzzle();
