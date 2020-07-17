@@ -123,7 +123,7 @@ function checkWinCondition() {
     puzzle.removeEventListener("click", puzzleClickHandler);
 
     // Alert the player that they have won.
-    alert("win");
+    alert("Way to go, you solved it!");
   }
 }
 
