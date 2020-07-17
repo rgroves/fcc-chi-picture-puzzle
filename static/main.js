@@ -179,13 +179,68 @@ function generateShuffledTileOrder(totalGridCells) {
 }
 
 //==============================================================================
+// This function determines if the configuration of tiles, represented by the
+// tileOrder array passed in, is a valid solvable puzzle. Not all randomly
+// shuffled tile orders will be solveable for this type of puzzle. It would be
+// frustrating for a player to solve most of the puzzle to find the last
+// remaining pieces cannot be slid into the proper place because of this. A
+// formula as described at the link below and implemented here is used to
+// determine the solvability of a given ordered set of tiles.
+// See: https://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
+//==============================================================================
+function isPuzzleSolvable(tileOrder) {
+  // Calculate the number of inversions that are present in the array of ordered
+  // tile numbers.
+  let inversionCount = 0;
+
+  for (let i = 0; i < tileOrder.length; i++) {
+    for (let j = i + 1; j < tileOrder.length; j++) {
+      if (tileOrder[i] > tileOrder[j]) {
+        inversionCount += 1;
+      }
+    }
+  }
+
+  // Calculate the row number (counting from the bottom of the puzzle grid,
+  // i.e. row 1 is the bottom row, row 2 is second from bottom, etc.) where the
+  // open tile resides.
+  let openTileCellNumber = openTile.parentElement.dataset.cellNumber;
+  let openTileRowNumberFromBottom =
+    gridRows - Math.ceil(openTileCellNumber / 4) + 1;
+
+  // Set up some helper functions we can use in the solvability test (below)
+  // to make it read nicer and be more understandable.
+  let isGridWidthOdd = () => gridColumns % 2 !== 0;
+  let isGridWidthEven = () => gridColumns % 2 === 0;
+  let isInversionCountEven = () => inversionCount % 2 === 0;
+  let isOpenTileOnOddRowFromBottom = () =>
+    openTileRowNumberFromBottom % 2 !== 0;
+
+  // The formula to test if the randomly shuffled configuration of numbers is a
+  // solveable puzzle is as follows:
+  //  ( (grid width odd) && (#inversions even) )  ||
+  //  ( (grid width even) && ((open on odd row from bottom) == (#inversions even)) )
+  return (
+    (isGridWidthOdd() && isInversionCountEven()) ||
+    (isGridWidthEven() &&
+      isOpenTileOnOddRowFromBottom() === isInversionCountEven())
+  );
+}
+
+//==============================================================================
 // This function makes the puzzle playable by shuffling the tile order and
 // wiring up the click handler which allows the player to move tiles.
 //==============================================================================
 function initializePuzzle() {
-  // Place tiles in a random order.
-  let tileOrder = generateShuffledTileOrder(tileCount);
+  // Shuffle tiles into a random order. Keep shuffling until the tile order
+  // is in a solvable configuration.
+  let tileOrder;
 
+  do {
+    tileOrder = generateShuffledTileOrder(tileCount);
+  } while (!isPuzzleSolvable(tileOrder));
+
+  // Move the tiles into the generated order.
   tileOrder.forEach((tileNumber, idx) => {
     let cellNumber = idx + 1;
     let tile = getTile(tileNumber);
