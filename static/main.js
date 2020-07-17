@@ -52,3 +52,40 @@ function moveTileIntoCellAtPosition(tile, cellNumber) {
     targetCell.appendChild(tile);
   }
 }
+
+//==============================================================================
+// This function performs the movement of a tile when a player clicks on it.
+//==============================================================================
+function puzzleClickHandler(event) {
+  // Save a reference to the clicked element.
+  let targetTile = event.target;
+
+  // Adjust for if the tile's hint was clicked instead of the tile itself.
+  if (
+    targetTile.tagName === "SPAN" &&
+    targetTile.classList.contains("tile-hint")
+  ) {
+    // Make the target tile the parent element, which should be the tile
+    // the clicked hint belongs to.
+    targetTile = targetTile.parentElement;
+  }
+
+  // If what was clicked was not a valid tile or if the open tile was clicked,
+  // ignore click and exit.
+  if (!targetTile.classList.contains("tile") || targetTile === openTile) {
+    return;
+  }
+
+  // Get the number of the cell where the clicked tile resides.
+  let fromCellNumber = targetTile.parentElement.dataset.cellNumber;
+  fromCellNumber = Number(fromCellNumber);
+
+  // Get the number of the cell where the open tile resides.
+  let openTileCellNumber = openTile.parentElement.dataset.cellNumber;
+  openTileCellNumber = Number(openTileCellNumber);
+
+  moveTileIntoCellAtPosition(targetTile, openTileCellNumber);
+  moveTileIntoCellAtPosition(openTile, fromCellNumber);
+}
+
+puzzle.addEventListener("click", puzzleClickHandler);
