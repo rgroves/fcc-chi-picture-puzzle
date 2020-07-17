@@ -148,10 +148,55 @@ function puzzleClickHandler(event) {
 }
 
 //==============================================================================
+// This function will return an array of randomly shuffled tile numbers to be
+// used to place tiles within the puzzle grid cells.
+//==============================================================================
+function generateShuffledTileOrder(totalGridCells) {
+  // The tileOrder array will contain a number for each non-open tile.
+  // The ordered elements in this array will map to the cell numbers in the
+  // puzzle grid. This means the value at index 0 will be the tile number that
+  // should be placed in cell number 1. The value at index 1 is the tile number
+  // that should be placed in cell number 2, and so on for all values in the
+  // array.
+  let tileOrder = [];
+
+  // Decrement the total cell count by one to account for the one open tile
+  // that will remain in the lower right corner of the puzzle grid and should
+  // not be shuffled around.
+  let numberOfTiles = totalGridCells - 1;
+
+  // Fill the array with the tile numbers 1 through numberOfTiles.
+  for (let i = 1; i <= numberOfTiles; i++) {
+    tileOrder.push(i);
+  }
+
+  // Perform a "weak" shuffle by sorting the array and using a compare callback
+  // function that generates a random number between -0.5 and +0.499 in order to
+  // force the sort to use a "random" order.
+  tileOrder.sort((a, b) => Math.random() - 0.5);
+
+  return tileOrder;
+}
+
+//==============================================================================
 // This function makes the puzzle playable by shuffling the tile order and
 // wiring up the click handler which allows the player to move tiles.
 //==============================================================================
 function initializePuzzle() {
+  // Place tiles in a random order.
+  let tileOrder = generateShuffledTileOrder(tileCount);
+
+  tileOrder.forEach((tileNumber, idx) => {
+    let cellNumber = idx + 1;
+    let tile = getTile(tileNumber);
+
+    moveTileIntoCellAtPosition(tile, cellNumber);
+  });
+
+  // The open tile is not being randomized and should always start in the last
+  // cell (which will have a cell number equal to the number of puzzle tiles).
+  moveTileIntoCellAtPosition(openTile, tileCount);
+
   // Setup click handler for tiles.
   puzzle.addEventListener("click", puzzleClickHandler);
 }
